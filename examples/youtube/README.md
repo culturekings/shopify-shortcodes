@@ -5,7 +5,7 @@ This shortcode allows the easy embedding of youtube video in pages and product d
 
 ## Usage
 
-Make sure to install the [Shortcode for Shopify](../../) plugin.
+Make sure to install the [Shortcode for Shopify](https://github.com/ryanheart/shopify-shortcodes/) plugin.
 
 You can then use the following shortcode.
 
