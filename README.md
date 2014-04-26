@@ -9,6 +9,7 @@ The purpose of this project is to make advanced html usage available to store ow
  - [Examples](#examples)
  - [Activating shortcodes](#activating-shortcodes)
  - [Shortcode fallback display](#shortcode-fallback-display)
+ - [Brackets in content](#brackets-in-content)
 
 ## Syntax
 
@@ -66,3 +67,17 @@ It plays on the fact the display of the data will more than likely be in a HTML 
     <!--[youtube width="800" height="500" video="M7lc1UVf-VE"]-->
 
 Using this syntax will however hide it from the WYISWYG editor and make editing by store owners more difficult.
+
+## Brackets in content
+
+You may be thinking what happens if I have square brackets in other parts of my content. Not to worry the plugin will only replace only if it finds an active shortcode for example
+
+    [ Random Content ]
+
+The above won't be replaces with new content unless a shortcode with the name Random exists. There are rare cases when the word you use is a shortcode and this will need to be fixed manually such as
+
+   [ youtube is a great channel ]
+
+Would need to be replaced by something such as
+
+   ( youtube is a great channel )
