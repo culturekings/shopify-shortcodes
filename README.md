@@ -3,7 +3,7 @@ Shortcodes for Shopify
 
 So quickly some information on syntax. We have tried to keep the system consistent with Wordpress so an example tag is
 
-[youtube width="800" height="500" video="M7lc1UVf-VE"]
+    [youtube width="800" height="500" video="M7lc1UVf-VE"]
     
 The first part is the snippet it is going to load and the rest are variables that you can use within the snippet
 
@@ -25,9 +25,9 @@ The youtube example used is available in the examples directory of this project.
 Activating Shortcodes
 ==================
 
-You must first copy shortcode.liquid and shortcode-render.liquid in to your snippets area.
+You must first copy `shortcode.liquid` and `shortcode-render.liquid` in to your snippets.
     
-To activate shortcode functionality a change to liquid tags is required where it is needed.
+To activate shortcode functionality a change to liquid tags is required where the functionality is required.
 
     {{ page.content }}
     
