@@ -70,14 +70,14 @@ Using this syntax will however hide it from the WYISWYG editor and make editing 
 
 ## Brackets in content
 
-You may be thinking what happens if I have square brackets in other parts of my content. Not to worry the plugin will only replace only if it finds an active shortcode for example
+You may be thinking what happens if I have square brackets in other parts of my content. Not to worry the plugin will only replace square bracket content if it finds an active shortcode. For example
 
     [ Random Content ]
 
-The above won't be replaces with new content unless a shortcode with the name Random exists. There are rare cases when the word you use is a shortcode and this will need to be fixed manually such as
+The above won't be replaced with new content unless a shortcode with the name Random exists. There are rare cases when the word you use is a shortcode and this will need to be fixed manually such as
 
-   [ youtube is a great channel ]
+    [ youtube is a great channel ]
 
 Would need to be replaced by something such as
 
-   ( youtube is a great channel )
+    ( youtube is a great channel )
