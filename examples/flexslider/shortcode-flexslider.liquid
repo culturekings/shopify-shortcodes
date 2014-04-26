@@ -1,0 +1,14 @@
+{% capture flexslider %}{% include 'shortcode-render' render:'action' %}{% endcapture %}
+{% case flexslider %}
+    {% when 'new slider' %}
+<div class="flexslider">
+  <ul class="slides">
+    {% when 'end slider' %}
+  </ul>
+</div>
+    {% when 'new slide' %}
+<li>
+    {% when 'end slide' %}
+</li>
+    {% else %}
+  {% endcase %}
