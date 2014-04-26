@@ -1,4 +1,4 @@
-Shortcodes for Shopify
+Shopify Shortcodes
 ==================
 
 The purpose of this project is to make advanced html usage available to store owners. This project can simplify galleries, faq, maps, videos and more for the store owner.
