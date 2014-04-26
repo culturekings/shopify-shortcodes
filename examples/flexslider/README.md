@@ -7,7 +7,7 @@ This shortcode allows the easy use the Flexslider plugin with shopify.
 
 Make sure to install the [Shortcode for Shopify](https://github.com/ryanheart/shopify-shortcodes/) plugin.
 
-Add the required files to the <head> of your layout file if your theme doesn't already support flexslider.
+Add the required files to the `<head>` of your layout file if your theme doesn't already support flexslider.
 
     <!-- Place somewhere in the <head> of your document -->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/flexslider/2.2.2/flexslider.css" type="text/css">
