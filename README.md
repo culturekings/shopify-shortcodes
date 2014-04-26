@@ -43,6 +43,7 @@ The purpose of this is to allow store owners to easily find all active shortcode
 The youtube example used is available in the examples directory of this project. If you have created a shortcode you would like to share feel free to create a pull request and we will add it in.
 
  - [Youtube Video Embed](examples/youtube)
+ - [Flexslider](examples/flexslider)
 
 ## Activating shortcodes
 
