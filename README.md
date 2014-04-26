@@ -1,60 +1,36 @@
 Shortcodes for Shopify
 ==================
 
-So quickly some information on syntax. I've kept the open and close tags as [[ ]] as they are rarely used. Also I've made the seperator to assign variables II as this is also rare. So a shortcode looks like this
+So quickly some information on syntax. We have tried to keep the system consistent with Wordpress so an example tag is
 
-    [[gallery||123||medium]]
+[youtube width="800" height="500" video="M7lc1UVf-VE"]
     
 The first part is the snippet it is going to load and the rest are variables that you can use within the snippet
 
-shortcode.liquid - This provides the shortcode ability and needs to be added.
+The above example will load the snippet `shortcode-youtube.liquid` from your snippet folder.
 
-    {% asssign load = load | replace: '<p>[[', '[[' %}
-    {% asssign load = load | replace: ']]</p>', ']]' %}
-    {% asssign load = load | replace: '<!--[[', '[[' %}
-    {% asssign load = load | replace: ']]-->', ']]' %}
-    {% assign shortcodeBegins = load | split: '[[' %}
-    {% if shortcodeBegins.size > 1 %}
-      {% for shortcodeBegin in shortcodeBegins %}
-        {% if forloop.first %}
-            {{shortcodeBegin}}
-        {% else %}
-          {% assign shortcodeEnds = shortcodeBegin | split: ']]' %}
-          {% capture shortcodeFull %}{{shortcodeEnds[0]}}{% endcapture %}
-          {% assign shortcode = shortcodeFull | split: '||' %}
-          {% assign variables = '' %}
-          {% for section in shortcode %}
-            {% if forloop.first %}
-            {% if forloop.last %}
-            {% assign variablesFinal = variables | split: '||' %}
-            {% include shortcode.first variable: variablesFinal %}
-            {% endif %}
-            {% else %}
-            {% if forloop.last %}
-            {% assign variables = variables | append: section %}
-            {% assign variablesFinal = variables | split: '||' %}
-            {% include shortcode.first variable: variablesFinal %}
-            {% else %}
-            {% assign variables = variables | append: section | append: '||' %}
-            {% endif %}
-            {% endif %}
-          {% endfor %}
-            {{shortcodeEnds[1]}}
-        {% endif %}
-      {% endfor %}
-    {% endif %}
-    
-And your snippet that you make will have the same name conventions as your shortcode so in this case it is gallery.liquid and you can use the variables as the variable array.
+It will then pass the variables `width`, `height` and `video` with the respective values.
 
-    Gallery Included<br>
-    {{variable[0]}}<br>
-    {{variable[1]}}<br>
-    <br>
+These variables are available to the snippet by using
+
+    {% include 'shortcode-render' render:'width' default:'640' %}
+
+For easy reuse you can simply capture the result in to your own variable with
+
+    {% capture youtubeWidth %}{% include 'shortcode-render' render:'width' default:'640' %}{% endcapture %}
+
+The youtube example used is available in the examples directory of this project. If you have created a snippet feel free to create a pull request and we will add it in.
+
+
+Activating Shortcodes
+==================
+
+You must first copy shortcode.liquid and shortcode-render.liquid in to your snippets area.
     
-To activate shortcode functionality a change to liquid tags are required to activate
+To activate shortcode functionality a change to liquid tags is required where it is needed.
 
     {{ page.content }}
     
 Would need to be changed to 
 
-    {% include shortcode load: page.content%}
+    {% include shortcode load: page.content %}
