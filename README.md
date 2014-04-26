@@ -5,6 +5,7 @@ The purpose of this project is to make advanced html usage available to store ow
 
  - [Syntax](#syntax)
  - [Accessing variables in snippets](#accessing-variables-in-snippets)
+ - [Naming convention](#naming-convention)
  - [Examples](#examples)
  - [Activating shortcodes](#activating-shortcodes)
 
@@ -30,10 +31,15 @@ For easy reuse you can simply capture the result in to your own variable with
 
     {% capture youtubeWidth %}{% include 'shortcode-render' render:'width' default:'640' %}{% endcapture %}
 
+## Naming convention
+
+All shortcodes are prefixed in the file system with `shortcode-` so make sure that if you want a shortcode of `youtube` you create a `shortcode-youtube.liquid` file.
+
+The purpose of this is to allow store owners to easily find all active shortcodes within a store and avoid collisions with other snippets.
+
 ## Examples
 
-The youtube example used is available in the examples directory of this project. If you have created a snippet feel free to create a pull request and we will add it in.
-
+The youtube example used is available in the examples directory of this project. If you have created a shortcode you would like to share feel free to create a pull request and we will add it in.
 
 ## Activating shortcodes
 
