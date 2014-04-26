@@ -8,6 +8,7 @@ The purpose of this project is to make advanced html usage available to store ow
  - [Naming convention](#naming-convention)
  - [Examples](#examples)
  - [Activating shortcodes](#activating-shortcodes)
+ - [Shortcode fallback display](#shortcode-fallback-display)
 
 ## Syntax
 
@@ -54,3 +55,13 @@ To activate shortcode functionality a change to liquid tags is required where th
 Would need to be changed to 
 
     {% include shortcode load: page.content %}
+
+## Shortcode fallback display
+
+As shopify data can be sent to external applications and used in places where the shortcode is unable to render an optional syntax is available.
+
+It plays on the fact the display of the data will more than likely be in a HTML page and uses the default HTML comment tag to hide the shortcode in places where it has not been rendered.
+
+    <!--[youtube width="800" height="500" video="M7lc1UVf-VE"]-->
+
+Using this syntax will however hide it from the WYISWYG editor and make editing by store owners more difficult.
