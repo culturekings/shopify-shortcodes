@@ -56,7 +56,7 @@ To activate shortcode functionality a change to liquid tags is required where th
     
 Would need to be changed to 
 
-    {% include shortcode load: page.content %}
+    {% include 'shortcode' load: page.content %}
 
 ## Shortcode fallback display
 
