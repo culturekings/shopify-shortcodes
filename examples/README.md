@@ -8,3 +8,4 @@ The following shortcode examples have been added to this project and are free to
 | ----------- | ----------- |
 | [youtube](youtube)     | This shortcode allows the easy embedding of youtube video in pages and product descriptions. |
 | [flexslider](flexslider)     | This shortcode allows the easy embedding of the WooThemese Flexslider in pages. |
+| [icon](fontawesome)     | This shortcode allows the easy embedding of Icons throughout the site. |

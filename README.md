@@ -16,7 +16,7 @@ The purpose of this project is to make advanced html usage available to store ow
 So quickly some information on syntax. We have tried to keep the system consistent with Wordpress so an example tag is
 
     [youtube width="800" height="500" video="M7lc1UVf-VE"]
-    
+
 The first part is the snippet it is going to load and the rest are variables that you can use within the snippet
 
 The above example will load the snippet `shortcode-youtube.liquid` from your snippet folder.
@@ -45,16 +45,17 @@ The youtube example used is available in the examples directory of this project.
 
  - [Youtube Video Embed](examples/youtube)
  - [Flexslider](examples/flexslider)
+ - [Font Awesome](examples/fontawesome)
 
 ## Activating shortcodes
 
 You must first copy `shortcode.liquid` and `shortcode-render.liquid` in to your snippets.
-    
+
 To activate shortcode functionality a change to liquid tags is required where the functionality is required.
 
     {{ page.content }}
-    
-Would need to be changed to 
+
+Would need to be changed to
 
     {% include 'shortcode' load: page.content %}
 

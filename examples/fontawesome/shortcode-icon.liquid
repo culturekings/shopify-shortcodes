@@ -1,0 +1,11 @@
+{% capture iconLink %}{% include 'shortcode-render' render:'url' default:'' %}{% endcapture %}
+{% capture iconSpin %}{% include 'shortcode-render' render:'spin' default:'' %}{% endcapture %}
+{% capture iconSize %}{% include 'shortcode-render' render:'size' default:'' %}{% endcapture %}
+{% capture iconClass %}{% include 'shortcode-render' render:'class' default:'' %}{% endcapture %}
+{% if iconLink != '' %}
+<a href="{{iconLink}}">
+{% endif %}
+<span class="fa fa-{{variable[0]}} {% if iconSpin != '' %}fa-spin{% endif %} {% if iconSize != '' %}fa-{{iconSize}}{% endif %} {% if iconClass != '' %}{{iconClass}}{% endif %}"></span>
+{% if iconLink != '' %}
+</a>
+{% endif %}
