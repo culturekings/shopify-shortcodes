@@ -23,6 +23,18 @@ The above example will load the snippet `shortcode-youtube.liquid` from your sni
 
 It will then pass the variables `width`, `height` and `video` with the respective values.
 
+## Activating shortcodes
+
+You must first copy `shortcode.liquid` and `shortcode-render.liquid` in to your snippets.
+
+To activate shortcode functionality a change to liquid tags is required where the functionality is required.
+
+    {{ page.content }}
+
+Would need to be changed to
+
+    {% include 'shortcode' load: page.content %}
+
 ## Accessing variables in snippets
 
 These variables are available to the snippet by using
@@ -46,18 +58,6 @@ The youtube example used is available in the examples directory of this project.
  - [Youtube Video Embed](examples/youtube)
  - [Flexslider](examples/flexslider)
  - [Font Awesome](examples/fontawesome)
-
-## Activating shortcodes
-
-You must first copy `shortcode.liquid` and `shortcode-render.liquid` in to your snippets.
-
-To activate shortcode functionality a change to liquid tags is required where the functionality is required.
-
-    {{ page.content }}
-
-Would need to be changed to
-
-    {% include 'shortcode' load: page.content %}
 
 ## Shortcode fallback display
 
