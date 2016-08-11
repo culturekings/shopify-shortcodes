@@ -1,131 +1,131 @@
-{% capture loadnew %}{{ load | replace: '<!--[', '[' }}{% endcapture %}
-{% capture loadnew %}{{ loadnew | replace: ']-->', ']' }}{% endcapture %}
-{% capture loadnew %}{{ loadnew | replace: ']</p>', ']' }}{% endcapture %}
-{% capture loadnew %}{{ loadnew | replace: '<p>[', '[' }}{% endcapture %}
-{% assign shortcodeBeginnings = loadnew | split: '[' %}
+{%- capture loadnew -%}{{- load | replace: '<!--[', '[' -}}{%- endcapture -%}
+{%- capture loadnew -%}{{- loadnew | replace: ']-->', ']' -}}{%- endcapture -%}
+{%- capture loadnew -%}{{- loadnew | replace: ']</p>', ']' -}}{%- endcapture -%}
+{%- capture loadnew -%}{{- loadnew | replace: '<p>[', '[' -}}{%- endcapture -%}
+{%- assign shortcodeBeginnings = loadnew | split: '[' -%}
 
-{% if shortcodeBeginnings.size > 1 %}
+{%- if shortcodeBeginnings.size > 1 -%}
 
-	{% for shortcodeBegin in shortcodeBeginnings %}
-		{% assign forloopNextIndex = forloop.index0 | plus: 1 %}
+	{%- for shortcodeBegin in shortcodeBeginnings -%}
+		{%- assign forloopNextIndex = forloop.index0 | plus: 1 -%}
 
-		{% comment %}
+		{%- comment -%}
 			// First Iteration will contain everithing before the first shortcode
-		{% endcomment %}
+		{%- endcomment -%}
 
-		{% if forloop.first %}
-			{{shortcodeBegin}}
-		{% else %}
-			{% assign shortcodeEndings = shortcodeBegin | split: ']' %}
-			{% assign contentAfterClosingTag = shortcodeEndings[1] %}
+		{%- if forloop.first -%}
+			{{-shortcodeBegin-}}
+		{%- else -%}
+			{%- assign shortcodeEndings = shortcodeBegin | split: ']' -%}
+			{%- assign contentAfterClosingTag = shortcodeEndings[1] -%}
 
-			{% capture shortcodeFull %}{{shortcodeEndings[0]}}{% endcapture %}
+			{%- capture shortcodeFull -%}{{-shortcodeEndings[0]-}}{%- endcapture -%}
 
-			{% assign shortcodes = shortcodeFull | split: '"' %}
-			{% assign variables = '' %}
-			{% assign keys = '' %}
-			{% assign thecycle == 'even' %}
+			{%- assign shortcodes = shortcodeFull | split: '"' -%}
+			{%- assign variables = '' -%}
+			{%- assign keys = '' -%}
+			{%- assign thecycle == 'even' -%}
 
-			{% for section in shortcodes %}
-				{% if thecycle == 'odd' %}
-					{% assign thecycle = 'even' %}
-				{% else %}
-					{% assign thecycle = 'odd'%}
-				{% endif %}
+			{%- for section in shortcodes -%}
+				{%- if thecycle == 'odd' -%}
+					{%- assign thecycle = 'even' -%}
+				{%- else -%}
+					{%- assign thecycle = 'odd'-%}
+				{%- endif -%}
 
-				{% if forloop.first %}
+				{%- if forloop.first -%}
 
-					{% comment %}
+					{%- comment -%}
 						// Handle Closing Tags and pass 'content'
-					{% endcomment %}
+					{%- endcomment -%}
 
-					{% assign sectionSpace = section | split: ' ' %}
+					{%- assign sectionSpace = section | split: ' ' -%}
 
-					{% assign content = '' %}
+					{%- assign content = '' -%}
 
-					{% assign currentSection = sectionSpace[0] %}
+					{%- assign currentSection = sectionSpace[0] -%}
 
-					{% assign nextSection = shortcodeBeginnings[forloopNextIndex] %}
-					{% assign nextSection = nextSection | split: ']' %}
-					{% assign nextSection = nextSection[0] %}
-					{% assign nextSection = nextSection | replace: '/', '' %}
+					{%- assign nextSection = shortcodeBeginnings[forloopNextIndex] -%}
+					{%- assign nextSection = nextSection | split: ']' -%}
+					{%- assign nextSection = nextSection[0] -%}
+					{%- assign nextSection = nextSection | replace: '/', '' -%}
 
-					{% if currentSection == nextSection %}
-						{% assign content = content | append: contentAfterClosingTag %}
-						{% assign variables = variables | append: content | append: '||' %}
-						{% assign keys = keys | append: 'content' | append: '||' %}
-						{% assign contentAfterClosingTag = '' %}
-					{% endif %}
+					{%- if currentSection == nextSection -%}
+						{%- assign content = content | append: contentAfterClosingTag -%}
+						{%- assign variables = variables | append: content | append: '||' -%}
+						{%- assign keys = keys | append: 'content' | append: '||' -%}
+						{%- assign contentAfterClosingTag = '' -%}
+					{%- endif -%}
 
-					{% if forloop.last %}
-						{% for space in sectionSpace %}
+					{%- if forloop.last -%}
+						{%- for space in sectionSpace -%}
 
-							{% comment %}
+							{%- comment -%}
 								// First Iteration will setup the correct template
-							{% endcomment %}
+							{%- endcomment -%}
 
-							{% if forloop.first %}
-								{% assign template = space | prepend: 'shortcode-' %}
-							{% else %}
-								{% if forloop.last %}
-									{% assign variables = variables | append: space | append: '||' %}
-								{% else %}
-									{% assign variables = variables | append: space | append: '||' %}
-								{% endif %}
-							{% endif %}
-						{% endfor %}
+							{%- if forloop.first -%}
+								{%- assign template = space | prepend: 'shortcode-' -%}
+							{%- else -%}
+								{%- if forloop.last -%}
+									{%- assign variables = variables | append: space | append: '||' -%}
+								{%- else -%}
+									{%- assign variables = variables | append: space | append: '||' -%}
+								{%- endif -%}
+							{%- endif -%}
+						{%- endfor -%}
 
-						{% capture output %}{% assign buildVariables = variables | split: '||' %}{% include template variable: buildVariables %}{% endcapture %}
+						{%- capture output -%}{%- assign buildVariables = variables | split: '||' -%}{%- include template variable: buildVariables -%}{%- endcapture -%}
 
-						{% if output contains 'Liquid error' %}
-							[{{ shortcodeFull }}]
-						{% else %}
-							{{output}}
-						{% endif %}
-					{% else %}
-						{% assign sectionSpace = section | split: ' ' %}
+						{%- if output contains 'Liquid error' -%}
+							[{{- shortcodeFull -}}]
+						{%- else -%}
+							{{-output-}}
+						{%- endif -%}
+					{%- else -%}
+						{%- assign sectionSpace = section | split: ' ' -%}
 
-						{% for space in sectionSpace %}
-							{% if forloop.first %}
-								{% assign template = sectionSpace.first | prepend: 'shortcode-' %}
-							{% else %}
-								{% if forloop.last %}
-									{% assign keys = keys | append: space | replace: '=', ''| append: '||' %}
-								{% else %}
-									{% assign keys = keys | append: "nokey_" | append: space | replace: '=', ''| append: '||' %}
-									{% assign variables = variables | append: space | append: '||' %}
-								{% endif %}
-							{% endif %}
-						{% endfor %}
-					{% endif %}
-				{% else %}
-					{% if forloop.last %}
-						{% assign variables = variables | append: section %}
-						{% assign variablesFinal = variables | split: '||' %}
-						{% assign keysFinal = keys | replace: ' ', '' | split: '||' %}
+						{%- for space in sectionSpace -%}
+							{%- if forloop.first -%}
+								{%- assign template = sectionSpace.first | prepend: 'shortcode-' -%}
+							{%- else -%}
+								{%- if forloop.last -%}
+									{%- assign keys = keys | append: space | replace: '=', ''| append: '||' -%}
+								{%- else -%}
+									{%- assign keys = keys | append: "nokey_" | append: space | replace: '=', ''| append: '||' -%}
+									{%- assign variables = variables | append: space | append: '||' -%}
+								{%- endif -%}
+							{%- endif -%}
+						{%- endfor -%}
+					{%- endif -%}
+				{%- else -%}
+					{%- if forloop.last -%}
+						{%- assign variables = variables | append: section -%}
+						{%- assign variablesFinal = variables | split: '||' -%}
+						{%- assign keysFinal = keys | replace: ' ', '' | split: '||' -%}
 
-						{% capture output %}{% include template variable: variablesFinal key: keysFinal %}{% endcapture %}
+						{%- capture output -%}{%- include template variable: variablesFinal key: keysFinal -%}{%- endcapture -%}
 
-						{% if output contains 'Liquid error' %}
-							 [{{ shortcodeFull }}] 
-						{% else %}
-							{{output}}
-						{% endif %}
-					{% else %}
-						{% if thecycle == 'even' %}
-							{% assign variables = variables | append: section | append: '||' %}
-						{% endif %}
+						{%- if output contains 'Liquid error' -%}
+							 [{{- shortcodeFull -}}] 
+						{%- else -%}
+							{{-output-}}
+						{%- endif -%}
+					{%- else -%}
+						{%- if thecycle == 'even' -%}
+							{%- assign variables = variables | append: section | append: '||' -%}
+						{%- endif -%}
 
-						{% if thecycle == 'odd' %}
-							{% assign keys = keys | append: section | replace: '=', ''| append: '||' %}
-						{% endif %}
-					{% endif %}
-				{% endif %}
-			{% endfor %}
+						{%- if thecycle == 'odd' -%}
+							{%- assign keys = keys | append: section | replace: '=', ''| append: '||' -%}
+						{%- endif -%}
+					{%- endif -%}
+				{%- endif -%}
+			{%- endfor -%}
 
-			{{contentAfterClosingTag}}
-		{% endif %}
-	{% endfor %}
-{% else %}
-	{{ load }}
-{% endif %}
+			{{-contentAfterClosingTag-}}
+		{%- endif -%}
+	{%- endfor -%}
+{%- else -%}
+	{{- load -}}
+{%- endif -%}
