@@ -24,7 +24,7 @@
 			{%- assign shortcodes = shortcodeFull | split: '"' -%}
 			{%- assign variables = '' -%}
 			{%- assign keys = '' -%}
-			{%- assign thecycle == 'even' -%}
+			{%- assign thecycle = 'even' -%}
 
 			{%- for section in shortcodes -%}
 				{%- if thecycle == 'odd' -%}
