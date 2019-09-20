@@ -61,11 +61,11 @@
 						{%- for space in sectionSpace -%}
 
 							{%- comment -%}
-								// First Iteration will setup the correct template
+								// First Iteration will setup the correct snippet
 							{%- endcomment -%}
 
 							{%- if forloop.first -%}
-								{%- assign template = space | prepend: 'shortcode-' -%}
+								{%- assign snippet = space | prepend: 'shortcode-' -%}
 							{%- else -%}
 								{%- if forloop.last -%}
 									{%- assign variables = variables | append: space | append: '||' -%}
@@ -75,7 +75,7 @@
 							{%- endif -%}
 						{%- endfor -%}
 
-						{%- capture output -%}{%- assign buildVariables = variables | split: '||' -%}{%- include template variable: buildVariables -%}{%- endcapture -%}
+						{%- capture output -%}{%- assign buildVariables = variables | split: '||' -%}{%- include snippet variable: buildVariables -%}{%- endcapture -%}
 
 						{%- if output contains 'Liquid error' -%}
 							[{{- shortcodeFull -}}]
@@ -87,7 +87,7 @@
 
 						{%- for space in sectionSpace -%}
 							{%- if forloop.first -%}
-								{%- assign template = sectionSpace.first | prepend: 'shortcode-' -%}
+								{%- assign snippet = sectionSpace.first | prepend: 'shortcode-' -%}
 							{%- else -%}
 								{%- if forloop.last -%}
 									{%- assign keys = keys | append: space | replace: '=', ''| append: '||' -%}
@@ -104,7 +104,7 @@
 						{%- assign variablesFinal = variables | split: '||' -%}
 						{%- assign keysFinal = keys | replace: ' ', '' | split: '||' -%}
 
-						{%- capture output -%}{%- include template variable: variablesFinal key: keysFinal -%}{%- endcapture -%}
+						{%- capture output -%}{%- include snippet variable: variablesFinal key: keysFinal -%}{%- endcapture -%}
 
 						{%- if output contains 'Liquid error' -%}
 							 [{{- shortcodeFull -}}] 
