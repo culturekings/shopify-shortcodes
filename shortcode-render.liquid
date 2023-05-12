@@ -1,10 +1,13 @@
-{%- assign shortcodekeyfound = false -%}
-{%- for keys in key  -%}
-    {%- if keys == render -%}
-        {{-variable[forloop.index0]-}}
-        {%- assign shortcodekeyfound = true -%}
-    {%- endif -%}
-{%- endfor -%}
-{%- if shortcodekeyfound == false -%}
-    {{-default-}}
-{%- endif -%}
+{%- liquid
+  assign shortcodekeyfound = false
+  for key in keys_final
+    if key == render_var
+      echo variables_arr[forloop.index0]
+      assign shortcodekeyfound = true
+    endif
+  endfor
+
+  if shortcodekeyfound == false
+    echo default
+  endif
+-%}
