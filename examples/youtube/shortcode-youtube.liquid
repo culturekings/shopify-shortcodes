@@ -1,1 +1,4 @@
-<iframe id="ytplayer" type="text/html" width="{% include 'shortcode-render' render:'width' default:'640' %}" height="{% include 'shortcode-render' render:'height' default:'390' %}" src="//www.youtube.com/embed/{% include 'shortcode-render' render:'src' default:'M7lc1UVf-VE' %}" frameborder="0" ></iframe>
+{% comment %}
+  Usage: [youtube width="800" height="500" src="DmnNrrnXrts"]
+{% endcomment %}
+<iframe id="ytplayer" type="text/html" width="{% render 'shortcode-render', render_var: 'width', default:'640', keys_final: keys_final, variables_arr: variables_arr %}" height="{% render 'shortcode-render', render_var: 'height', default:'390', keys_final: keys_final, variables_arr: variables_arr %}" src="//www.youtube.com/embed/{% render 'shortcode-render', render_var: 'src', default:'M7lc1UVf-VE', keys_final: keys_final, variables_arr: variables_arr %}" frameborder="0" ></iframe>

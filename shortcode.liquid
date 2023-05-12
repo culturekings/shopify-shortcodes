@@ -1,131 +1,145 @@
-{%- capture loadnew -%}{{- load | replace: '<!--[', '[' -}}{%- endcapture -%}
-{%- capture loadnew -%}{{- loadnew | replace: ']-->', ']' -}}{%- endcapture -%}
-{%- capture loadnew -%}{{- loadnew | replace: ']</p>', ']' -}}{%- endcapture -%}
-{%- capture loadnew -%}{{- loadnew | replace: '<p>[', '[' -}}{%- endcapture -%}
-{%- assign shortcodeBeginnings = loadnew | split: '[' -%}
+{%- capture load_new -%}{{- load | replace: '<!--[', '[' -}}{%- endcapture -%}
+{%- capture load_new -%}{{- load_new | replace: ']-->', ']' -}}{%- endcapture -%}
+{%- capture load_new -%}{{- load_new | replace: ']</p>', ']' -}}{%- endcapture -%}
+{%- capture load_new -%}{{- load_new | replace: '<p>[', '[' -}}{%- endcapture -%}
+{%- assign shortcode_beginnings = load_new | split: '[' -%}
 
-{%- if shortcodeBeginnings.size > 1 -%}
+{%- if shortcode_beginnings.size > 1 -%}
 
-	{%- for shortcodeBegin in shortcodeBeginnings -%}
-		{%- assign forloopNextIndex = forloop.index0 | plus: 1 -%}
+  {%- for shortcode_begin in shortcode_beginnings -%}
+    {%- assign forloop_next_index0 = forloop.index0 | plus: 1 -%}
 
-		{%- comment -%}
-			// First Iteration will contain everithing before the first shortcode
-		{%- endcomment -%}
+    {%- comment -%}
+      // First Iteration will contain everithing before the first shortcode
+    {%- endcomment -%}
 
-		{%- if forloop.first -%}
-			{{-shortcodeBegin-}}
-		{%- else -%}
-			{%- assign shortcodeEndings = shortcodeBegin | split: ']' -%}
-			{%- assign contentAfterClosingTag = shortcodeEndings[1] -%}
+    {%- if forloop.first -%}
+      {{-shortcode_begin-}}
+    {%- else -%}
+      {%- assign shortcode_endings = shortcode_begin | split: ']' -%}
+      {%- assign content_after_closing_tag = shortcode_endings[1] -%}
 
-			{%- capture shortcodeFull -%}{{-shortcodeEndings[0]-}}{%- endcapture -%}
+      {%- capture shortcode_full -%}{{-shortcode_endings[0]-}}{%- endcapture -%}
 
-			{%- assign shortcodes = shortcodeFull | split: '"' -%}
-			{%- assign variables = '' -%}
-			{%- assign keys = '' -%}
-			{%- assign thecycle = 'even' -%}
+      {%- assign shortcodes = shortcode_full | split: '"' -%}
+      {%- assign variables = '' -%}
+      {%- assign keys = '' -%}
+      {%- assign thecycle = 'even' -%}
 
-			{%- for section in shortcodes -%}
-				{%- if thecycle == 'odd' -%}
-					{%- assign thecycle = 'even' -%}
-				{%- else -%}
-					{%- assign thecycle = 'odd'-%}
-				{%- endif -%}
+      {%- for segment in shortcodes -%}
+        {%- if thecycle == 'odd' -%}
+          {%- assign thecycle = 'even' -%}
+        {%- else -%}
+          {%- assign thecycle = 'odd'-%}
+        {%- endif -%}
 
-				{%- if forloop.first -%}
+        {%- if forloop.first -%}
 
-					{%- comment -%}
-						// Handle Closing Tags and pass 'content'
-					{%- endcomment -%}
+          {%- comment -%}
+            // Handle Closing Tags and pass 'content'
+          {%- endcomment -%}
 
-					{%- assign sectionSpace = section | split: ' ' -%}
+          {%- assign section_space = segment | split: ' ' -%}
 
-					{%- assign content = '' -%}
+          {%- assign content = '' -%}
 
-					{%- assign currentSection = sectionSpace[0] -%}
+          {%- assign current_section = section_space[0] -%}
 
-					{%- assign nextSection = shortcodeBeginnings[forloopNextIndex] -%}
-					{%- assign nextSection = nextSection | split: ']' -%}
-					{%- assign nextSection = nextSection[0] -%}
-					{%- assign nextSection = nextSection | replace: '/', '' -%}
+          {%- assign next_section = shortcode_beginnings[forloop_next_index0] -%}
+          {%- assign next_section = next_section | split: ']' -%}
+          {%- assign next_section = next_section[0] -%}
+          {%- assign next_section = next_section | replace: '/', '' -%}
 
-					{%- if currentSection == nextSection -%}
-						{%- assign content = content | append: contentAfterClosingTag -%}
-						{%- assign variables = variables | append: content | append: '||' -%}
-						{%- assign keys = keys | append: 'content' | append: '||' -%}
-						{%- assign contentAfterClosingTag = '' -%}
-					{%- endif -%}
+          {%- if current_section == next_section -%}
+            {%- assign content = content | append: content_after_closing_tag -%}
+            {%- assign variables = variables | append: content | append: '||' -%}
+            {%- assign keys = keys | append: 'content' | append: '||' -%}
+            {%- assign content_after_closing_tag = '' -%}
+          {%- endif -%}
 
-					{%- if forloop.last -%}
-						{%- for space in sectionSpace -%}
+          {%- if forloop.last -%}
+            {%- for space in section_space -%}
+              {%- comment -%}
+                // First Iteration will setup the correct template
+              {%- endcomment -%}
 
-							{%- comment -%}
-								// First Iteration will setup the correct template
-							{%- endcomment -%}
+              {%- if forloop.first -%}
+                {%- assign template_name = space -%}
+              {%- else -%}
+                {%- if forloop.last -%}
+                  {%- assign variables = variables | append: space | append: '||' -%}
+                {%- else -%}
+                  {%- assign variables = variables | append: space | append: '||' -%}
+                {%- endif -%}
+              {%- endif -%}
+            {%- endfor -%}
 
-							{%- if forloop.first -%}
-								{%- assign template = space | prepend: 'shortcode-' -%}
-							{%- else -%}
-								{%- if forloop.last -%}
-									{%- assign variables = variables | append: space | append: '||' -%}
-								{%- else -%}
-									{%- assign variables = variables | append: space | append: '||' -%}
-								{%- endif -%}
-							{%- endif -%}
-						{%- endfor -%}
+            {%- capture output -%}
+              {%- assign variables_arr = variables | split: '||' -%}
+              {%- case template_name -%}
+                {%- when 'youtube' -%}
+                  {%- render 'shortcode-youtube', variables_arr: variables_arr -%}
+                {%- when 'icon' -%}
+                  {%- render 'shortcode-icon', variables_arr: variables_arr -%}
+              {%- endcase -%}
+            {%- endcapture -%}
 
-						{%- capture output -%}{%- assign buildVariables = variables | split: '||' -%}{%- include template variable: buildVariables -%}{%- endcapture -%}
+            {%- if output contains 'Liquid error' -%}
+              [{{- shortcode_full -}}]
+            {%- else -%}
+              {{-output-}}
+            {%- endif -%}
+          {%- else -%}
+            {%- assign section_space = segment | split: ' ' -%}
 
-						{%- if output contains 'Liquid error' -%}
-							[{{- shortcodeFull -}}]
-						{%- else -%}
-							{{-output-}}
-						{%- endif -%}
-					{%- else -%}
-						{%- assign sectionSpace = section | split: ' ' -%}
+            {%- for space in section_space -%}
+              {%- if forloop.first -%}
+                {%- assign template_name = section_space.first -%}
+              {%- else -%}
+                {%- if forloop.last -%}
+                  {%- assign keys = keys | append: space | replace: '=', ''| append: '||' -%}
+                {%- else -%}
+                  {%- assign keys = keys | append: "nokey_" | append: space | replace: '=', ''| append: '||' -%}
+                  {%- assign variables = variables | append: space | append: '||' -%}
+                {%- endif -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+        {%- else -%}
+          {%- if forloop.last -%}
+            {%- assign variables = variables | append: segment -%}
+            {%- assign variables_final = variables | split: '||' -%}
+            {%- assign keys_final = keys | replace: ' ', '' | split: '||' -%}
 
-						{%- for space in sectionSpace -%}
-							{%- if forloop.first -%}
-								{%- assign template = sectionSpace.first | prepend: 'shortcode-' -%}
-							{%- else -%}
-								{%- if forloop.last -%}
-									{%- assign keys = keys | append: space | replace: '=', ''| append: '||' -%}
-								{%- else -%}
-									{%- assign keys = keys | append: "nokey_" | append: space | replace: '=', ''| append: '||' -%}
-									{%- assign variables = variables | append: space | append: '||' -%}
-								{%- endif -%}
-							{%- endif -%}
-						{%- endfor -%}
-					{%- endif -%}
-				{%- else -%}
-					{%- if forloop.last -%}
-						{%- assign variables = variables | append: section -%}
-						{%- assign variablesFinal = variables | split: '||' -%}
-						{%- assign keysFinal = keys | replace: ' ', '' | split: '||' -%}
+            {%- capture output -%}
+              {%- case template_name -%}
+                {%- when 'youtube' -%}
+                  {%- render 'shortcode-youtube', variables_arr: variables_final, keys_final: keys_final -%}
+                {%- when 'icon' -%}
+                  {%- render 'shortcode-icon', variables_arr: variables_final, keys_final: keys_final -%}
+              {%- endcase -%}
+            {%- endcapture -%}
 
-						{%- capture output -%}{%- include template variable: variablesFinal key: keysFinal -%}{%- endcapture -%}
+            {%- if output contains 'Liquid error' -%}
+               [{{- shortcode_full -}}] 
+            {%- else -%}
+              {{-output-}}
+            {%- endif -%}
+          {%- else -%}
+            {%- if thecycle == 'even' -%}
+              {%- assign variables = variables | append: segment | append: '||' -%}
+            {%- endif -%}
 
-						{%- if output contains 'Liquid error' -%}
-							 [{{- shortcodeFull -}}] 
-						{%- else -%}
-							{{-output-}}
-						{%- endif -%}
-					{%- else -%}
-						{%- if thecycle == 'even' -%}
-							{%- assign variables = variables | append: section | append: '||' -%}
-						{%- endif -%}
+            {%- if thecycle == 'odd' -%}
+              {%- assign keys = keys | append: segment | replace: '=', ''| append: '||' -%}
+            {%- endif -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
 
-						{%- if thecycle == 'odd' -%}
-							{%- assign keys = keys | append: section | replace: '=', ''| append: '||' -%}
-						{%- endif -%}
-					{%- endif -%}
-				{%- endif -%}
-			{%- endfor -%}
-
-			{{-contentAfterClosingTag-}}
-		{%- endif -%}
-	{%- endfor -%}
+      {{-content_after_closing_tag-}}
+    {%- endif -%}
+  {%- endfor -%}
 {%- else -%}
-	{{- load -}}
+  {{- load -}}
 {%- endif -%}

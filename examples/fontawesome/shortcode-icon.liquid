@@ -1,11 +1,7 @@
-{% capture iconLink %}{% include 'shortcode-render' render:'url' default:'' %}{% endcapture %}
-{% capture iconSpin %}{% include 'shortcode-render' render:'spin' default:'' %}{% endcapture %}
-{% capture iconSize %}{% include 'shortcode-render' render:'size' default:'' %}{% endcapture %}
-{% capture iconClass %}{% include 'shortcode-render' render:'class' default:'' %}{% endcapture %}
-{% if iconLink != '' %}
-<a href="{{iconLink}}">
-{% endif %}
-<span class="fa fa-{{variable[0]}} {% if iconSpin != '' %}fa-spin{% endif %} {% if iconSize != '' %}fa-{{iconSize}}{% endif %} {% if iconClass != '' %}{{iconClass}}{% endif %}"></span>
-{% if iconLink != '' %}
-</a>
-{% endif %}
+{% capture icon_link %}{% render 'shortcode-render', render_var: 'url', default: '' %}{% endcapture %}
+{% capture icon_spin %}{% render 'shortcode-render', render_var: 'spin', default: '' %}{% endcapture %}
+{% capture icon_size %}{% render 'shortcode-render', render_var: 'size', default: '' %}{% endcapture %}
+{% capture icon_class %}{% render 'shortcode-render', render_var: 'class', default: '' %}{% endcapture %}
+{% if icon_link != '' %}<a href="{{icon_link}}">{% endif %}
+  <span class="fa fa-{{variables_arr[0]}} {% if icon_spin != '' %}fa-spin{% endif %} {% if icon_size != '' %}fa-{{icon_size}}{% endif %} {% if icon_class != '' %}{{icon_class}}{% endif %}"></span>
+{% if icon_link != '' %}</a>{% endif %}
